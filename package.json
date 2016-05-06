@@ -1,0 +1,40 @@
+{
+  "name": "simr",
+  "version": "0.0.1",
+  "description": "write common redux actions and reducers quick and simply",
+  "main": "lib/index.js",
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "eslint": "^2.9.0",
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2"
+  },
+  "dependencies": {
+    "lodash": "^4.11.2"
+  },
+  "scripts": {
+    "build": "mkdir -p public && browserify lib/index.js -o public/simr.js",
+    "test": "mocha",
+    "lint": "eslint './**/*.js' && npm run lint-success -s",
+    "lint-success": "echo '\n\u001b[32m✓ 0 problems (0 errors, 0 warnings)\u001b[30m\n'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dalexj/simr.git"
+  },
+  "keywords": [
+    "redux",
+    "actions",
+    "reducers",
+    "simple",
+    "framework"
+  ],
+  "author": "dalexj",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dalexj/simr/issues"
+  },
+  "homepage": "https://github.com/dalexj/simr"
+}

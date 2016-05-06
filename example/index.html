@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Simr With React/Redux</title>
+    <script src="../public/simr.js"></script>
+    <script src="../node_modules/react/dist/react.js"></script>
+    <script src="../node_modules/redux/dist/redux.js"></script>
+    <script src="../node_modules/react-redux/dist/react-redux.js"></script>
+    <script src="../node_modules/react-dom/dist/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="mount-react"></div>
+    <script type="text/babel">
+
+
+
+var exampleReducer = new Simr.Reducer('example', {
+  name: 'world'
+});
+exampleReducer.addSetter('name');
+
+
+var rootReducer = Redux.combineReducers({
+  example: exampleReducer.build()
+});
+
+
+
+var Hello = ReactRedux.connect(state => ({store: state}))(React.createClass({
+  render: function() {
+    return (
+      <div>
+        <h1>Hello {this.props.store.example.name}</h1>
+        <button onClick={() => this.changeName('world')}>world</button>
+        <button onClick={() => this.changeName('world10')}>world10</button>
+        <button onClick={() => this.changeName('world3')}>world3</button>
+        <button onClick={() => this.changeName('world5')}>world5</button>
+      </div>
+    );
+  },
+  changeName(newName) {
+    this.props.dispatch(Simr.actions.setOn('example', 'name', newName));
+  },
+}));
+
+
+
+ReactDOM.render(
+  <ReactRedux.Provider store={Redux.createStore(rootReducer)}>
+    <Hello name="World" />
+  </ReactRedux.Provider>,
+  document.getElementById('mount-react')
+);
+
+
+
+
+    </script>
+  </body>
+</html>
