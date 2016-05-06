@@ -15,7 +15,7 @@
     "lodash": "^4.11.2"
   },
   "scripts": {
-    "build": "mkdir -p public && browserify lib/index.js -o public/simr.js",
+    "build": "mkdir -p public && browserify lib/export.js -o public/simr.js",
     "test": "mocha",
     "lint": "eslint './**/*.js' && npm run lint-success -s",
     "lint-success": "echo '\n\u001b[32m✓ 0 problems (0 errors, 0 warnings)\u001b[30m\n'"
