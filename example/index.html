@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Simr With React/Redux</title>
     <script src="../public/simr.js"></script>
+    <script src="../node_modules/lodash/lodash.js"></script>
     <script src="../node_modules/react/dist/react.js"></script>
     <script src="../node_modules/redux/dist/redux.js"></script>
     <script src="../node_modules/react-redux/dist/react-redux.js"></script>
@@ -17,9 +18,11 @@
 
 
 var exampleReducer = new Simr.Reducer('example', {
-  name: 'world'
+  name: 'world',
+  someArr: [],
 });
 exampleReducer.addSetter('name');
+exampleReducer.arrayResources('someArr');
 
 
 var rootReducer = Redux.combineReducers({
@@ -33,10 +36,20 @@ var Hello = ReactRedux.connect(state => ({store: state}))(React.createClass({
     return (
       <div>
         <h1>Hello {this.props.store.example.name}</h1>
+        <h1>Hello {JSON.stringify(this.props.store.example.someArr)}</h1>
         <button onClick={() => this.changeName('world')}>world</button>
         <button onClick={() => this.changeName('world10')}>world10</button>
         <button onClick={() => this.changeName('world3')}>world3</button>
         <button onClick={() => this.changeName('world5')}>world5</button>
+        <button onClick={() => this.props.dispatch(Simr.actions.concatTo('example', 'someArr', {id: this.props.store.example.someArr.length}))}>
+          add
+        </button>
+        <button onClick={() => this.props.dispatch(Simr.actions.updateIndex('example', 'someArr', 1, a => _.merge({}, a, {t: 1})))}>
+          update index 1
+        </button>
+        <button onClick={() => this.props.dispatch(Simr.actions.updateID('example', 'someArr', 3, a => _.merge({}, a, {g: 1})))}>
+          update id 3
+        </button>
       </div>
     );
   },
