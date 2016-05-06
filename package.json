@@ -17,7 +17,7 @@
   "scripts": {
     "build": "mkdir -p public && browserify lib/export.js -o public/simr.js",
     "test": "mocha",
-    "lint": "eslint './**/*.js' && npm run lint-success -s",
+    "lint": "eslint 'lib/*.js' && npm run lint-success -s",
     "lint-success": "echo '\n\u001b[32m✓ 0 problems (0 errors, 0 warnings)\u001b[30m\n'"
   },
   "repository": {
