@@ -32,23 +32,35 @@ var rootReducer = Redux.combineReducers({
 
 
 var Hello = ReactRedux.connect(state => ({store: state}))(React.createClass({
-  render: function() {
+  render() {
     return (
       <div>
         <h1>Hello {this.props.store.example.name}</h1>
-        <h1>Hello {JSON.stringify(this.props.store.example.someArr)}</h1>
+        <h1>someArr: {JSON.stringify(this.props.store.example.someArr)}</h1>
         <button onClick={() => this.changeName('world')}>world</button>
         <button onClick={() => this.changeName('world10')}>world10</button>
         <button onClick={() => this.changeName('world3')}>world3</button>
         <button onClick={() => this.changeName('world5')}>world5</button>
-        <button onClick={() => this.props.dispatch(Simr.actions.concatTo('example', 'someArr', {id: this.props.store.example.someArr.length}))}>
+        <button onClick={() => this.concatToSomeArr({id: this.props.store.example.someArr.length})}>
           add
         </button>
-        <button onClick={() => this.props.dispatch(Simr.actions.updateIndex('example', 'someArr', 1, a => _.merge({}, a, {t: 1})))}>
-          update index 1
+        <button onClick={() => this.updateIndex(1, a => _.merge({}, a, {t: 1}))}>
+          update index 1 with fn
         </button>
-        <button onClick={() => this.props.dispatch(Simr.actions.updateID('example', 'someArr', 3, a => _.merge({}, a, {g: 1})))}>
-          update id 3
+        <button onClick={() => this.updateIndex(1, {t: 7})}>
+          update index 1 with object
+        </button>
+        <button onClick={() => this.updateID(3, a => _.merge({}, a, {g: 1}))}>
+          update id 3 with fn
+        </button>
+        <button onClick={() => this.updateID(3, {g: 8})}>
+          update id 3 with object
+        </button>
+        <button onClick={() => this.removeID(2)}>
+          remove id 2
+        </button>
+        <button onClick={() => this.removeIndex(0)}>
+          remove index 0
         </button>
       </div>
     );
@@ -56,13 +68,28 @@ var Hello = ReactRedux.connect(state => ({store: state}))(React.createClass({
   changeName(newName) {
     this.props.dispatch(Simr.actions.setOn('example', 'name', newName));
   },
+  updateIndex(index, update) {
+    this.props.dispatch(Simr.actions.updateIndex('example', 'someArr', index, update))
+  },
+  updateID(id, update) {
+    this.props.dispatch(Simr.actions.updateID('example', 'someArr', id, update))
+  },
+  concatToSomeArr(obj) {
+    this.props.dispatch(Simr.actions.concatTo('example', 'someArr', obj))
+  },
+  removeIndex(index) {
+    this.props.dispatch(Simr.actions.removeIndex('example', 'someArr', index))
+  },
+  removeID(id) {
+    this.props.dispatch(Simr.actions.removeID('example', 'someArr', id))
+  },
 }));
 
 
 
 ReactDOM.render(
   <ReactRedux.Provider store={Redux.createStore(rootReducer)}>
-    <Hello name="World" />
+    <Hello />
   </ReactRedux.Provider>,
   document.getElementById('mount-react')
 );
