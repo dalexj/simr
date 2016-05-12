@@ -43,30 +43,36 @@ var Hello = ReactRedux.connect(state => ({store: state}))(React.createClass({
         <button onClick={() => this.changeName('world5')}>world5</button>
         <button onClick={() => this.concatToSomeArr({id: this.props.store.example.someArr.length})}>
           add
-        </button>
+        </button><br />
         <button onClick={() => this.updateIndex(1, a => _.merge({}, a, {t: 1}))}>
           update index 1 with fn
-        </button>
+        </button><br />
         <button onClick={() => this.updateIndex(1, {t: 7})}>
           update index 1 with object
-        </button>
+        </button><br />
         <button onClick={() => this.updateID(3, a => _.merge({}, a, {g: 1}))}>
           update id 3 with fn
-        </button>
+        </button><br />
         <button onClick={() => this.updateID(3, {g: 8})}>
           update id 3 with object
-        </button>
+        </button><br />
         <button onClick={() => this.removeID(2)}>
           remove id 2
-        </button>
+        </button><br />
         <button onClick={() => this.removeIndex(0)}>
           remove index 0
-        </button>
+        </button><br />
+        <button onClick={() => this.updateAll({test: 'new'})}>
+          update all
+        </button><br />
       </div>
     );
   },
   changeName(newName) {
     this.props.dispatch(Simr.actions.setOn('example', 'name', newName));
+  },
+  updateAll(update) {
+    this.props.dispatch(Simr.actions.updateAll('example', 'someArr', update));
   },
   updateIndex(index, update) {
     this.props.dispatch(Simr.actions.updateIndex('example', 'someArr', index, update))
