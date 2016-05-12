@@ -1,6 +1,6 @@
 {
   "name": "simr",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "write common redux actions and reducers quick and simply",
   "main": "lib/index.js",
   "devDependencies": {
